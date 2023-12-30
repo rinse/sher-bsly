@@ -1,6 +1,6 @@
-# Syntax highlighter for BlueSky
+# Syntax highlighter for Bluesky
 
-Chrome extension to enable syntax highlight on BlueSky.
+chrome extension to enable syntax highlight on Bluesky.
 
 ![Sample screenshot](/screenshot.png)
 

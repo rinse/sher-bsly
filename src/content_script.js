@@ -1,7 +1,7 @@
 const onLoad = () => {
     const regex = /^```(.*)\n([\s\S]*)\n```$/gm;
     setInterval(() => {
-        console.debug("Syntax highlighter for BlueSky Highlighting...");
+        console.debug("Syntax highlighter for Bluesky Highlighting...");
         const tweets = document.querySelectorAll("div[data-testid='postText']");
         for (const tweet of tweets) {
             const wholeText = tweet.innerText;
