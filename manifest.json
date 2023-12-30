@@ -1,0 +1,6 @@
+{
+    "name": "Sher-bsky",
+    "description": "Syntax highlighter for BlueSky",
+    "version": "0.1.0",
+    "manifest_version": 3
+}
