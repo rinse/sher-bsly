@@ -2,5 +2,21 @@
     "name": "Sher-bsky",
     "description": "Syntax highlighter for BlueSky",
     "version": "0.1.0",
-    "manifest_version": 3
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "*://bsky.app/"
+            ],
+            "css": [
+                "lib/highlight.js/styles/default.min.css"
+            ],
+            "js": [
+                "src/content_script.js",
+                "lib/highlight.js/highlight.min.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ]
 }
