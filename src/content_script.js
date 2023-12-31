@@ -7,10 +7,8 @@ const onLoad = () => {
         for (const tweet of tweets) {
             const results = tweet.innerText.matchAll(regex);
             const newChildren = Array.from(results).flatMap(result => {
-                const leadingText = result[1];
-                const language = result[2].toLowerCase();
-                const codes = result[3];
-                const pre = codeBlock(codes, language);
+                const [_, leadingText, language, codes] = result;
+                const pre = codeBlock(codes, language.toLowerCase());
                 return [leadingText, pre];
             });
             if (newChildren.length !== 0) {
