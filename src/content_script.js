@@ -15,9 +15,6 @@ const onLoad = () => {
             });
             if (newChildren.length !== 0) {
                 tweet.replaceChildren(...newChildren);
-                tweet.querySelectorAll("pre code").forEach(e => {
-                    hljs.highlightElement(e);
-                });
             }
             tweet.classList.add(mark);
         }
@@ -32,5 +29,6 @@ function codeBlock(codes, language) {
         code.classList.add(`language-${language}`)
     }
     code.append(codes);
+    hljs.highlightElement(code);
     return pre;
 }
