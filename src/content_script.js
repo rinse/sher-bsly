@@ -6,22 +6,20 @@ const onLoad = () => {
         const tweets = document.querySelectorAll(`div[data-testid='postText']:not(.${mark})`);
         for (const tweet of tweets) {
             const results = tweet.innerText.matchAll(regex);
-            const newChildren = []; // Seems an iterable iterator object from matchAll() doesn't support flatMap yet.
-            for (const result of results) {
+            const newChildren = Array.from(results).flatMap(result => {
                 const leadingText = result[1];
                 const language = result[2].toLowerCase();
                 const codes = result[3];
                 const pre = codeBlock(codes, language);
-                newChildren.push(leadingText);
-                newChildren.push(pre);
-            }
-            tweet.classList.add(mark);
+                return [leadingText, pre];
+            });
             if (newChildren.length !== 0) {
                 tweet.replaceChildren(...newChildren);
                 tweet.querySelectorAll("pre code").forEach(e => {
                     hljs.highlightElement(e);
                 });
             }
+            tweet.classList.add(mark);
         }
     }, 2000);
 }
