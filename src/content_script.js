@@ -1,21 +1,23 @@
 const onLoad = () => {
-    const regex = /^```(.*)\n([\s\S]*)\n```$/gm;
+    const regex = /([\s\S]*?)\n?^```(.*)\n([\s\S]*)\n```$/gm;
+    const mark = "sher-bsky-checked";
     setInterval(() => {
         console.debug("Syntax highlighter for Bluesky Highlighting...");
-        const tweets = document.querySelectorAll("div[data-testid='postText']");
+        const tweets = document.querySelectorAll(`div[data-testid='postText']:not(.${mark})`);
         for (const tweet of tweets) {
-            const wholeText = tweet.innerText;
-            const results = wholeText.matchAll(regex);
-            let newHTML = wholeText;
+            const results = tweet.innerText.matchAll(regex);
+            const newChildren = []; // Seems an iterable iterator object from matchAll() doesn't support flatMap yet.
             for (const result of results) {
-                const matched = result[0];
-                const language = result[1]?.toLowerCase();
-                const codes = result[2];
-                const html = `<pre><code class="${language ? "language-" + language : undefined}">${codes}</code></pre>`;
-                newHTML = newHTML.replace(matched, html);
+                const leadingText = result[1];
+                const language = result[2].toLowerCase();
+                const codes = result[3];
+                const pre = codeBlock(codes, language);
+                newChildren.push(leadingText);
+                newChildren.push(pre);
             }
-            if (newHTML !== wholeText) {
-                tweet.innerHTML = newHTML;
+            tweet.classList.add(mark);
+            if (newChildren.length !== 0) {
+                tweet.replaceChildren(...newChildren);
                 tweet.querySelectorAll("pre code").forEach(e => {
                     hljs.highlightElement(e);
                 });
@@ -24,3 +26,13 @@ const onLoad = () => {
     }, 2000);
 }
 window.addEventListener("load", onLoad);
+
+function codeBlock(codes, language) {
+    const pre = document.createElement("pre");
+    const code = pre.appendChild(document.createElement("code"));
+    if (language !== "") {
+        code.classList.add(`language-${language}`)
+    }
+    code.append(codes);
+    return pre;
+}
