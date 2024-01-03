@@ -6,7 +6,7 @@
     "content_scripts": [
         {
             "matches": [
-                "*://bsky.app/"
+                "*://bsky.app/*"
             ],
             "css": [
                 "lib/highlight.js/styles/default.min.css"
